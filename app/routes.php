@@ -48,6 +48,8 @@ Route::get('logout', array('as'=>'logout', function(){
 Route::resource('user', 'UserController');
 Route::resource('game', 'GameController');
 
+Route::get('/game/{id}/start', 'GameController@start');
+
 Route::get('/gamereport/{id}', function($id){
 	$scores = GameData::where('game_id','=',$id)->get(array('user_id','point'));
 	$maxPoint = GameData::where('game_id','=',$id)->first(array(DB::raw('MAX(point) as point')));

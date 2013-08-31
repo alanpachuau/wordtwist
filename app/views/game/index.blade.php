@@ -1,6 +1,7 @@
 @section('content')
 <fieldset>
 	<legend>Games</legend>
+	{{$active}}
 	<p class="help-block">We can have only one game active at one time.</p>
 	<table class="table table-hover">
 		<thead>
@@ -18,14 +19,32 @@
 			<tr>
 				<td>{{$game->id}}</td>
 				<td>{{$game->name}}</td>
-				<td>{{nl2br($game->word)}}</td>
-				<td>{{$game->duration}}</td>
+				<td><?php
+				$words = explode("\r\n",$game->word);
+				foreach($words as $key=>$w)
+					echo ($key+1).". ".$w."<br>";
+				?></td>
+				<td>{{$game->duration}} Seconds</td>
 				<td>{{$game->minimum_letter}}</td>
 				<td>
 					{{Form::open(array('url'=>'/game/'.$game->id, 'method'=>'delete', 'class'=>'form form-inline'))}}
-					<a href="/game/start" class="disabled btn btn-sm btn-info">START</a>
-					<a href="/game/{{$game->id}}/edit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+					
+					@if($game->status == 'completed')
+						<span class="btn btn-sm btn-success">{{strtoupper($game->status)}}</span>
+					@elseif($game->status == 'active')
+						<a href="javascript:void(0)" class="btn btn-sm btn-primary">{{strtoupper($game->status)}}</a>
+
+					@elseif($active > 0)
+						<a href="javascript:void(0)" class="btn disabled btn-sm btn-info">START</a>
+					@else
+						<a href="/game/{{$game->id}}/start" class="btn btn-sm btn-info">START</a>
+					@endif
+
+					<a href="/game/{{$game->id}}/edit" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+
+					@if($game->status != 'completed')
 					<button onclick="return confirm('Are you sure you want to delete this game?')" type="submit" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+					@endif
 					{{Form::close()}}
 				</td>
 			</tr>

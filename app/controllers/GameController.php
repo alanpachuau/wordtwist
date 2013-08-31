@@ -14,7 +14,8 @@ class GameController extends \BaseController {
 	 */
 	public function index()
 	{
-		$this->layout->content = View::make('game.index', array('games' => Game::paginate(10)));
+		$active = Game::where('status','=','active')->count();
+		$this->layout->content = View::make('game.index', array('games' => Game::paginate(10), 'active'=>$active));
 	}
 
 	/**
@@ -149,6 +150,31 @@ class GameController extends \BaseController {
 				$game->delete();
 
 				return Redirect::to("/game")->with(array('successMessage'=>'Game deleted successfully.'));
+			}
+			else
+				return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
+		}
+		else
+			return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
+	}
+
+	/**
+	 * Start a game.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function start($id)
+	{
+		if($id != null)
+		{
+			$game = Game::find($id);
+			if($game)
+			{
+				$game->status = 'active';
+				$game->save();
+
+				return Redirect::to("/game")->with(array('successMessage'=>'Game started successfully.'));
 			}
 			else
 				return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
