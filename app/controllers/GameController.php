@@ -14,7 +14,7 @@ class GameController extends \BaseController {
 	 */
 	public function index()
 	{
-		$this->layout->content = View::make('game.index');
+		$this->layout->content = View::make('game.index', array('games' => Game::paginate(10)));
 	}
 
 	/**
@@ -57,7 +57,7 @@ class GameController extends \BaseController {
 			$game->minimum_letter = Input::get('minimum_letter');
 			$game->word = Input::get('word');
 			$game->save();
-			
+
 			return Redirect::to("/game/create")->with(array('successMessage'=>'Game create successfully.'));
 		}
 	}
