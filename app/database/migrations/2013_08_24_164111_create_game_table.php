@@ -21,6 +21,7 @@ class CreateGameTable extends Migration {
 			$table->integer('interval_dutraion'); // game interval for each word duration for each word in seconds
 			$table->string('players');
 			$table->integer('minimum_letter');
+			$table->text('status');
 			$table->timestamps();
 		});
 	}
