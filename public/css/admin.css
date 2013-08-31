@@ -1,0 +1,50 @@
+body {
+	padding: 70px 0 40px;
+}
+#footer {
+	width: 100%;
+	margin:30px 0 0;
+}
+.navbar-inverse {
+	background-color: #155C7E;
+	border-color: #163653;
+}
+.gamereport .chart-title {
+	background: #797979;
+	margin: 0;
+	color: #fff;
+	font-size: 14px;
+	font-family: Verdana;
+	text-transform: uppercase;
+	padding: 11px 10px;
+}
+.gamereport .chart {
+	margin: 3px 0 0;
+	background: #F5F5F5;
+	padding: 10px;
+}
+.gamereport .chart .team {
+	margin:0 0 20px;
+}
+.gamereport .chart .team label {
+	display: block;
+	width: 100%;
+}
+.gamereport .chart .team .score {
+	display: block;
+	clear: both;
+	width: 100%;
+	background: #ffffff;
+}
+.gamereport .chart .team .score .bar {
+	background: #26ADD8;
+	height: 6px;
+	width: 0%;
+	border: 1px solid #FFF;
+}
+.gamereport .round-report {
+	color: #6D6D6D;
+}
+.gamereport .round-report.active-round {
+	color: #353535;
+}

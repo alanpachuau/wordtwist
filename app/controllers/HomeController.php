@@ -15,9 +15,14 @@ class HomeController extends BaseController {
 	|
 	*/
 
-	public function showWelcome()
+	public function welcome()
 	{
-		return View::make('hello');
+		if(Auth::check() && Auth::user()->type == 'admin')
+			$this->layout->content = View::make('home.admin');
+		elseif(Auth::check() && Auth::user()->type == 'player')
+			$this->layout->content = View::make('home.player');
+		else
+			return Redirect::route('login');
 	}
 
 }

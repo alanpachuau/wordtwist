@@ -1,21 +1,19 @@
-## Laravel PHP Framework
+## Word Twist Game
 
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/version.png)](https://packagist.org/packages/laravel/framework) [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.png)](https://packagist.org/packages/laravel/framework) [![Build Status](https://travis-ci.org/laravel/framework.png)](https://travis-ci.org/laravel/framework)
+Word Twist Game is a client server based gaming platform, designed to be played by a team of players.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+## How To Play
+Word Twist Game is very simple to play. We have two type of users to in order to play, the administrator and the players. The players (team) will be given a single word, and they have to form words using the letter in the selected word. We have one basic rule -
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+1. Letters in the selected word can be used not more than the number of times it appears on the word. If the selected word is TWIST, we can use the letter T two times and W once, and so on to form new word.
+2. The administrator can set the minimum letter to form a new word, such that the player can form a word with the number of letters equal to or more than the limit, but not less than the limit.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+In order to play Word Twist, we need to have administrator to command the game play and a team of players to participate. Each team can have at least two members and ideally at least three members to participate . The administrator will set start time for the game and team members are assigned a specific task to play this game as - 
 
-## Official Documentation
-
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
-
-### Contributing To Laravel
-
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
+1. The I/O: This person will be 
+2. Input
+3. Processor 
 
 ### License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+The Word Twist game is open-sourced software licensed under the [GPL v2](http://www.gnu.org/licenses/gpl-2.0.html)
