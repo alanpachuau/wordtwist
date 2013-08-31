@@ -24,8 +24,12 @@ class GameController extends \BaseController {
 	 */
 	public function create()
 	{
-		$users = array(1=>'Alan', 2=>'Pachuau');
-		$this->layout->content = View::make('game.create', array('players'=>$users));
+		$users = User::all();
+		$players = array();
+		foreach($users as $user)
+			$players[$user->id] = $user->username;
+
+		$this->layout->content = View::make('game.create', array('players'=>$players));
 	}
 
 	/**
@@ -81,7 +85,23 @@ class GameController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		if($id != null)
+		{
+			$game = Game::find($id);
+			if($game)
+			{
+				$users = User::all();
+				$players = array();
+				foreach($users as $user)
+					$players[$user->id] = $user->username;
+
+				$this->layout->content = View::make('game.edit', array('game'=>$game, 'players'=>$players));
+			}
+			else
+				return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
+		}
+		else
+			return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
 	}
 
 	/**
@@ -92,7 +112,25 @@ class GameController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		if($id != null)
+		{
+			$game = Game::find($id);
+			if($game)
+			{
+				$game->name = (Input::get('name') != '')?Input::get('name'):'My Game';
+				$game->duration = Input::get('duration');
+				$game->players = implode(",",Input::get('players'));
+				$game->minimum_letter = Input::get('minimum_letter');
+				$game->word = Input::get('word');
+				$game->save();
+
+				return Redirect::to("/game/".$id."/edit/")->with(array('successMessage'=>'Game updated successfully.'));
+			}
+			else
+				return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
+		}
+		else
+			return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
 	}
 
 	/**
@@ -103,7 +141,20 @@ class GameController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		if($id != null)
+		{
+			$game = Game::find($id);
+			if($game)
+			{
+				$game->delete();
+
+				return Redirect::to("/game")->with(array('successMessage'=>'Game deleted successfully.'));
+			}
+			else
+				return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
+		}
+		else
+			return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
 	}
 
 }
