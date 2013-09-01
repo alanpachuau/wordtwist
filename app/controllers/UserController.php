@@ -14,7 +14,9 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('user.index');
+		$useractive = User::where('status','=','active')->count();
+		$this->layout->content = View::make('user.index', array('users' => User::paginate(10), 'useractive'=>$useractive));
+		//return View::make('user.index');
 	}
 
 	/**
@@ -24,7 +26,10 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		
+		$types = array('admin'=>'Administrator','player'=>'Player');
+
+		$this->layout->content = View::make('user.create', array('types'=>$types));
 	}
 
 	/**
@@ -34,7 +39,14 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$user = new User;
+		$user->username = Input::get('username');
+		$user->password = Hash::make(Input::get('password'));
+		$user->type = implode(",",Input::get('types'));
+		$user->status = 'active';
+		$user->save();
+		
+		return Redirect::to("/user")->with(array('successMessage'=>'User create successfully.'));	
 	}
 
 	/**
@@ -67,7 +79,21 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		dd(Input::all());
+		if($id != null)
+		{
+			$user = User::find($id);
+			if($user)
+			{
+				$user->delete();
+
+				return Redirect::to("/user")->with(array('successMessage'=>'User deleted successfully.'));
+			}
+			else
+				return Redirect::to("/user")->with(array('errorMessage'=>'Invalid user id!'));
+		}
+		else
+			return Redirect::to("/user")->with(array('errorMessage'=>'Invalid user id!'));
 	}
 
 	/**
