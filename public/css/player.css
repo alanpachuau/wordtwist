@@ -1,0 +1,49 @@
+body {
+	padding: 70px 0 0;
+}
+.player-form {
+	display: block;
+	clear: both;
+	height: 100px;
+}
+.player-form input {
+	text-transform: uppercase;
+}
+.player-form p.help-block {
+	color: #aaa;
+	text-transform: uppercase;
+}
+.wordlist {
+	display: block;
+	clear: both;
+}
+.wordlist .thelist {
+	list-style: decimal;
+}
+.wordlist .thelist li {
+	color: #222;
+	/*font-weight: bold;*/
+	padding: 2px 10px;
+	font-family: Verdana;
+	font-size: 12px;
+	border-bottom: 1px dashed #fff;
+	text-transform: uppercase;
+}
+.wordlist .thelist li:hover {
+	border-bottom: 1px dashed #888;
+}
+.current-word {
+	font-size:14px;
+	font-family: Georgia;
+	font-style: italic;
+	color: #222222;
+}
+.current-word span {
+	font-style: normal;
+	font-size: 40px;
+	font-weight: bold;
+	font-family: monospace;
+	margin: 0 0 50px;
+	display: block;
+	text-transform: uppercase;
+}

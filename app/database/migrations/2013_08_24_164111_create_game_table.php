@@ -15,13 +15,14 @@ class CreateGameTable extends Migration {
 		Schema::create('games', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->text('name'); // Name of the game, optional
-			$table->text('word'); // New line separated words
+			$table->text('name')->nullable(); // Name of the game, optional
+			$table->string('word');
 			$table->integer('duration'); // game duration for each word in seconds
-			$table->integer('interval_dutraion'); // game interval for each word duration for each word in seconds
 			$table->string('players');
 			$table->integer('minimum_letter');
-			$table->text('status');
+			$table->dateTime('start_at')->nullable();
+			$table->dateTime('finish_at')->nullable();
+			$table->string('status')->nullable();
 			$table->timestamps();
 		});
 	}

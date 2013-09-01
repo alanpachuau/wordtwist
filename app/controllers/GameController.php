@@ -25,7 +25,7 @@ class GameController extends \BaseController {
 	 */
 	public function create()
 	{
-		$users = User::all();
+		$users = User::where('type','=','player')->get();
 		$players = array();
 		foreach($users as $user)
 			$players[$user->id] = $user->username;
@@ -41,7 +41,6 @@ class GameController extends \BaseController {
 	public function store()
 	{
 		$rules = array(
-			'name'				=> 'alpha_num',
 			'duration'			=> 'numeric|required',
 			'players'			=> 'required',
 			'minimum_letter'	=> 'required',
@@ -91,7 +90,7 @@ class GameController extends \BaseController {
 			$game = Game::find($id);
 			if($game)
 			{
-				$users = User::all();
+				$users = User::where('type','=','player')->get();
 				$players = array();
 				foreach($users as $user)
 					$players[$user->id] = $user->username;
@@ -115,20 +114,34 @@ class GameController extends \BaseController {
 	{
 		if($id != null)
 		{
-			$game = Game::find($id);
-			if($game)
-			{
-				$game->name = (Input::get('name') != '')?Input::get('name'):'My Game';
-				$game->duration = Input::get('duration');
-				$game->players = implode(",",Input::get('players'));
-				$game->minimum_letter = Input::get('minimum_letter');
-				$game->word = Input::get('word');
-				$game->save();
+			$rules = array(
+				'duration'			=> 'numeric|required',
+				'players'			=> 'required',
+				'minimum_letter'	=> 'required',
+				'word'				=> 'required'
+				);
 
-				return Redirect::to("/game/".$id."/edit/")->with(array('successMessage'=>'Game updated successfully.'));
-			}
+			$validator = Validator::make(Input::all(), $rules);
+
+			if($validator->fails())
+				return Redirect::to("/game/".$id."/edit")->withErrors($validator)->withInput();
 			else
-				return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
+			{
+				$game = Game::find($id);
+				if($game)
+				{
+					$game->name = (Input::get('name') != '')?Input::get('name'):'My Game';
+					$game->duration = Input::get('duration');
+					$game->players = implode(",",Input::get('players'));
+					$game->minimum_letter = Input::get('minimum_letter');
+					$game->word = Input::get('word');
+					$game->save();
+
+					return Redirect::to("/game/".$id."/edit/")->with(array('successMessage'=>'Game updated successfully.'));
+				}
+				else
+					return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
+			}
 		}
 		else
 			return Redirect::to("/game")->with(array('errorMessage'=>'Invalid game id!'));
@@ -171,7 +184,11 @@ class GameController extends \BaseController {
 			$game = Game::find($id);
 			if($game)
 			{
+				$game_start_in = 5; // seconds after start is clicked.
+
 				$game->status = 'active';
+				$game->start_at = DB::raw('DATE_ADD(NOW(), INTERVAL '.$game_start_in.' SECOND)');
+				$game->finish_at = DB::raw('DATE_ADD(NOW(), INTERVAL '.($game_start_in+$game->duration).' SECOND)');
 				$game->save();
 
 				return Redirect::to("/game")->with(array('successMessage'=>'Game started successfully.'));

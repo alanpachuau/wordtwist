@@ -53,7 +53,7 @@
 var interval;
 clearInterval(interval);
 $(function() {
-	interval = setInterval('getGameReport(1)', 1000);
+	interval = setInterval('getGameReport(3)', 1000);
 });
 
 function getGameReport(gameid)

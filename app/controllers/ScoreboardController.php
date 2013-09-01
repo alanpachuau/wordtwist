@@ -14,74 +14,24 @@ class ScoreboardController extends \BaseController {
 	 */
 	public function index()
 	{
-		$score = GameData::all();
-		$this->layout->content = View::make('scoreboard.index', array('score' => GameData::paginate(10), 'score'=>$score));
-		//return View::make('user.index');
-	}
+		$greenhouse = GameData::where("user_id","=",1)->get(array(DB::raw('SUM(point) as point')));
+		$greenhouse = $greenhouse->toArray();
+		$bluehouse = GameData::where("user_id","=",2)->get(array(DB::raw('SUM(point) as point')));
+		$bluehouse = $bluehouse->toArray();
+		$redhouse = GameData::where("user_id","=",3)->get(array(DB::raw('SUM(point) as point')));
+		$redhouse = $redhouse->toArray();
+		$yellowhouse = GameData::where("user_id","=",4)->get(array(DB::raw('SUM(point) as point')));
+		$yellowhouse = $yellowhouse->toArray();
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		
-		//
-	}
+		$highest = GameData::orderby(DB::raw('SUM(point)'), 'desc')->get(array(DB::raw('SUM(point) as point')));
+		$highest = $highest->toArray();
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
+		return View::make('scoreboard', array(
+			'r' => (isset($redhouse)? $redhouse[0]['point']:0),
+			'g' => (isset($greenhouse)?$greenhouse[0]['point']:0),
+			'b' => (isset($bluehouse)?$bluehouse[0]['point']:0),
+			'y' => (isset($yellowhouse)?$yellowhouse[0]['point']:0),
+			'highest' => (isset($highest)?$highest[0]['point']:0)
+			));
 	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
 }

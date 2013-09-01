@@ -36,10 +36,9 @@
 		</div>
 		
 		<div class="form-group {{$errors->has('words')?'has-error':''}}">
-			<label for="word" class="col-lg-3 control-label">Words List</label>
+			<label for="word" class="col-lg-3 control-label">Word</label>
 			<div class="col-lg-6">
-				{{ Form::textarea('word', $game->word, array('rows'=>"5", 'style'=>'resize:vertical', 'id'=>'word', 'class'=>'form-control')) }}
-				<p class="help-block">Enter one word per one line.</p>
+				{{ Form::text('word', $game->word, array('id'=>'word', 'class'=>'form-control')) }}
 			</div>
 		</div>
 
