@@ -47,6 +47,7 @@ Route::get('logout', array('as'=>'logout', function(){
 
 Route::resource('user', 'UserController');
 Route::resource('game', 'GameController');
+Route::resource('scoreboard', 'ScoreboardController');
 
 Route::get('/game/{id}/start', 'GameController@start');
 
