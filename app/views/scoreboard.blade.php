@@ -15,7 +15,12 @@
 <body>
     <div class="container">
         <div class="col-lg-12">
-            <h1 class="text-center text-primary">SCORE BOARD</h1>
+            @if($game)
+            <h3 class="text-center tex">SCORE BOARD</h3>
+            <h1 class="text-center text-success" style="font-family:monospace;font-size:5em;">{{strtoupper($game->word)}}</h1>
+            @else
+            <h1 class="text-center tex">SCORE BOARD</h1>
+            @endif
             <table class="table score-table">
                 <tr>
                     <td align="bottom" style="vertical-align:bottom;" class='col-lg-3'>
@@ -46,9 +51,9 @@
     <script type="text/javascript" src="/libraries/bs3/js/bootstrap.min.js"></script>
     <script type="text/javascript">
     $(function(){
-        var h = window.innerHeight;
-        $(".score-table td div").css("height", h-450);
-        $(".score-table td").height(h-350);
+        var h = window.innerHeight - 380;
+        $(".score-table td div").css("height", h);
+        // $(".score-table td").height(h-350);
 
         var r = {{$r?$r:0}};
         var g = {{$g?$g:0}};
@@ -87,7 +92,15 @@
         var yh = 0;
         if(yp > 0)
             yh = (yp/100) * h;
-
+// console.log(rp);
+// console.log(gp);
+// console.log(bp);
+// console.log(yp);
+// console.log(h);
+// console.log(rh);
+// console.log(gh);
+// console.log(bh);
+// console.log(yh);
         $("#red").css("height", rh);
         $("#green").css("height", gh);
         $("#blue").css("height", bh);
